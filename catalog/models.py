@@ -32,3 +32,13 @@ class Product(models.Model):
         return self.name
 
 
+class Contact(models.Model):
+    address = models.CharField(max_length=200, verbose_name='Адрес')
+    phone = models.CharField(max_length=20, verbose_name='Телефон')
+    email = models.EmailField(max_length=20, verbose_name='Электронная почта')
+
+    class Meta:
+        verbose_name = 'Контакты'
+        verbose_name_plural = 'Контакты'
+
+
