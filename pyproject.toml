@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "skypro-store"
+name = "sky-store"
 version = "0.1.0"
 description = ""
 authors = ["speedfreak <gdramze@gmail.com>"]
@@ -8,6 +8,9 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 django = "^5.0.4"
+psycopg2 = "^2.9.9"
+pillow = "^10.3.0"
+python-dotenv = "^1.0.1"
 
 
 [build-system]
