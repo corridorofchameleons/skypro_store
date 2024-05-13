@@ -14,7 +14,11 @@ def product_list(request):
 
 
 def product_details(request, pk):
-    return render(request, 'catalog/details.html', context=context)
+    product = Product.objects.filter(pk=pk).first()
+
+    print(product.image)
+    return render(request, 'catalog/details.html',
+                  context=context | {'product': product})
 
 
 def contacts(request):
