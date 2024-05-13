@@ -7,12 +7,10 @@ context = {'app_title': APP_TITLE}
 
 
 def index(request):
-    products = Product.objects.all().order_by('created_at').reverse()[:5]
-    for p in products:
-        print(p.name)
+    products = Product.objects.all()
 
-    return render(request, 'catalog/index.html',
-                  context=context)
+    return render(request, 'catalog/base.html',
+                  context=context | {'products': products})
 
 
 def contacts(request):
