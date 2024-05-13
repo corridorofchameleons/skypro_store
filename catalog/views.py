@@ -6,11 +6,15 @@ APP_TITLE = 'SF Store'
 context = {'app_title': APP_TITLE}
 
 
-def index(request):
+def product_list(request):
     products = Product.objects.all()
 
-    return render(request, 'catalog/base.html',
+    return render(request, 'catalog/product_list.html',
                   context=context | {'products': products})
+
+
+def product_details(request, pk):
+    return render(request, 'catalog/details.html', context=context)
 
 
 def contacts(request):
