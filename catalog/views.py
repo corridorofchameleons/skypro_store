@@ -5,16 +5,21 @@ from catalog.models import Product, Contact
 APP_TITLE = 'SF Store'
 context = {'app_title': APP_TITLE}
 
+paginate_by = 3
+
 
 def index(request):
     return render(request, 'catalog/index.html')
 
 
-def product_list(request):
+def product_list(request, page=1):
+
     products = Product.objects.all()
+    pages = len(products) // paginate_by + 1
 
     return render(request, 'catalog/product_list.html',
-                  context=context | {'products': products})
+                  context=context | {'products': products[paginate_by * (page - 1): paginate_by * page],
+                                     'pages': range(1, pages)})
 
 
 def product_details(request, pk):
