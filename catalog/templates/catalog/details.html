@@ -1,11 +1,11 @@
 {% extends 'catalog/base.html' %}
-
+{% load my_tags %}
 {% block content %}
 <div class="card mb-5" style="max-width: 1000px;">
   <div class="row g-0">
     <div class="col-md-4">
 
-      <img src="/{{product.image}}" class="img-fluid rounded-start">
+      <img src="{{product.image|url_filter}}" class="img-fluid rounded-start">
     </div>
     <div class="col-md-8">
       <div class="card-body">

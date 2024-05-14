@@ -6,6 +6,10 @@ APP_TITLE = 'SF Store'
 context = {'app_title': APP_TITLE}
 
 
+def index(request):
+    return render(request, 'catalog/index.html')
+
+
 def product_list(request):
     products = Product.objects.all()
 
