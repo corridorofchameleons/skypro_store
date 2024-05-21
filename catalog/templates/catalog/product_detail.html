@@ -1,0 +1,31 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="card mb-5" style="max-width: 1000px;">
+    <div class="row g-0">
+        <div class="col-md-4">
+
+            <img src="{{product.image|url_filter}}" class="img-fluid rounded-start">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{product.name}}</h5>
+                <p class="card-text">{{product.description}}</p>
+                <p class="card-text"><small class="text-body-secondary">Цена: {{product.price}} ед.</small></p>
+                <div class="btn-group">
+                    <button type="button" class="btn"><a class="btn btn-warning" href="{% url 'catalog:update' product.pk %}" role="button">
+                        Изменить
+                    </a>
+                    </button>
+                    <button type="button" class="btn"><a class="btn btn-danger" href="{% url 'catalog:delete' product.pk %}" role="button">
+                        Удалить
+                    </a>
+                    </button>
+                </div>
+                </br>
+                <a href="{% url 'catalog:home' %}">Назад</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
