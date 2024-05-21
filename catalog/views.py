@@ -11,7 +11,7 @@ paginate_by = 3
 
 
 class IndexView(TemplateView):
-    template_name = 'catalog/article_list.html'
+    template_name = 'catalog/index.html'
 
 
 class ProductListView(ListView):

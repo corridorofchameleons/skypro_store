@@ -1,0 +1,24 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <form class="row" method="post" enctype="multipart/form-data">
+                <div class="card">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </div>
+                <button class="btn" type="submit"><a class="btn btn-primary">Сохранить</a></button>
+                {% if object %}
+                <button class="btn">
+                    <a class="btn btn-warning" href="{% url 'blog:details' article.slug %}">Вернуться</a></button>
+                {% else %}
+                <button class="btn">
+                    <a class="btn btn-warning" href="{% url 'blog:index' %}">Вернуться</a></button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

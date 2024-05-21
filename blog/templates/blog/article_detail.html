@@ -5,16 +5,30 @@
     <div class="row g-0">
         <div class="col-md-4">
 
-            <img src="{{product.image|url_filter}}" class="img-fluid rounded-start">
+            <img src="{{article.image|url_filter2}}" class="img-fluid rounded-start">
         </div>
         <div class="col-md-8">
             <div class="card-body">
                 <h5 class="card-title">{{article.title}}</h5>
                 <p class="card-text">{{article.content}}</p>
-                <div class="row">
+                <div class="row justify-content-start">
                     <small class="text-body-secondary">Опубликовано: {{ article.created_at|date:'Y-m-d H:i' }}</small>
                     <small class="text-body-secondary">Просмотров: {{ article.views }}</small>
 
+                    <div class="text-start mt-3">
+                        <button type="button" class="btn"><a class="btn btn-warning"
+                                                             href="{% url 'blog:update' article.slug %}" role="button">
+                            Изменить
+                        </a>
+                        </button>
+                    </div>
+                    <div class="text-start mb-3">
+                        <button type="button" class="btn"><a class="btn btn-danger"
+                                                             href="{% url 'blog:delete' article.slug %}" role="button">
+                            Удалить
+                        </a>
+                        </button>
+                    </div>
                     <a href="{% url 'blog:index' %}">Назад</a>
                 </div>
             </div>
