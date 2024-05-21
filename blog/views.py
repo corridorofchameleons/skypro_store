@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.core.mail import send_mail
 from django.urls import reverse, reverse_lazy
 from django.utils.text import slugify
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
@@ -9,9 +9,28 @@ from blog.models import Article
 class ArticleListView(ListView):
     model = Article
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(is_published=True)
+        return queryset
+
 
 class ArticleDetailView(DetailView):
     model = Article
+
+    def get_object(self, queryset=None):
+        item = super().get_object(queryset)
+        item.views += 1
+        if item.views == 20:
+            send_mail(
+                'Congratulations!',
+                f'The article {item.title} reached 20 views!',
+                'constantgore@yandex.ru',
+                ['constantgore@yandex.ru'],
+                fail_silently=False,
+            )
+        item.save()
+        return item
 
 
 class ArticleCreateView(CreateView):
