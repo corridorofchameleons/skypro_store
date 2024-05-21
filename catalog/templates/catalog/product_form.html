@@ -9,7 +9,7 @@
                     {% csrf_token %}
                     {{ form.as_p }}
                 </div>
-                <button class="btn" type="submit">Сохранить</button>
+                <button class="btn" type="submit"><a class="btn btn-primary">Сохранить</a></button>
                 {% if object %}
                 <button class="btn">
                     <a class="btn btn-warning" href="{% url 'catalog:details' object.pk %}">Вернуться</a></button>

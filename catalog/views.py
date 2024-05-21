@@ -1,7 +1,5 @@
-from datetime import datetime
-
-from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
+from django.utils import timezone
 from django.views.generic import TemplateView, ListView, UpdateView, DetailView, DeleteView, CreateView
 
 from catalog.models import Product, Contact
@@ -13,7 +11,7 @@ paginate_by = 3
 
 
 class IndexView(TemplateView):
-    template_name = 'catalog/index.html'
+    template_name = 'catalog/article_list.html'
 
 
 class ProductListView(ListView):
@@ -38,7 +36,7 @@ class ProductUpdateView(UpdateView):
 
     def form_valid(self, form):
         product = Product.objects.get(pk=self.object.pk)
-        product.updated_at = datetime.now()
+        product.updated_at = timezone.now()
         product.save()
         return super().form_valid(form)
 
@@ -55,9 +53,9 @@ class ContactsView(TemplateView):
     template_name = 'catalog/contacts.html'
 
 
-
 # def index(request):
-#     return render(request, 'catalog/index.html')
+#     return render(request, 'catalog/article_list.html')
+
 
 # def product_list(request, page=1):
 #

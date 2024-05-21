@@ -1,0 +1,43 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<a class="btn btn-primary" href="{% url 'catalog:create' %}">Создать статью</a>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for article in object_list %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="{{article.image|url_filter}}" class="img-thumbnail">
+                    <div class="card-body">
+                        <h3 class="card-text">{{ article.title }}</h3>
+                        <p class="card-text">{{ article.content|truncatechars:100 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+
+                                <!--                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
+                            </div>
+                            <div class="row">
+                                <small class="text-body-secondary">Опубликовано: {{ article.created_at|date:'Y-m-d H:i' }}</small>
+                                <small class="text-body-secondary">Просмотров: {{ article.views }}</small>
+                                <button type="button" class="btn btn-sm btn-outline-secondary mt-3"><a
+                                        href="{% url 'blog:details' article.pk %}" style="text-decoration: none">Открыть</a>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {% for page in pages %}
+        <li class="page-item"><a class="page-link" href="{% url 'catalog:home' page=page %}">{{ page }}</a></li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endblock %}
