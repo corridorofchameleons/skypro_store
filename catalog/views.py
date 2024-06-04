@@ -54,24 +54,23 @@ class ProductUpdateView(UpdateView):
     model = Product
     form_class = ProductForm
 
-    def form_valid(self, form):
+        def form_valid(self, form):
         context = self.get_context_data()
         formset = context.get('formset')
         if form.is_valid():
-            product = form.save(commit=False)
-            versions = Version.objects.filter(product=product)
 
-            # убираем все данные о текущей версии
-            for v in versions:
-                v.current = False
-                v.save()
+            # продукт до проверки не сохраняем
+            product = form.save(commit=False)
 
             if formset.is_valid():
                 formset.instance = product
 
-                # сохраняем сразу как есть. Если попытка неудачная, они все равно очистятся
-                versions = formset.save()
+                # версии сохраняем как есть
+                formset.save()
 
+                versions = Version.objects.filter(product=product)
+
+                # счетчик текущих версий
                 curr_cnt = 0
 
                 for v in versions:
