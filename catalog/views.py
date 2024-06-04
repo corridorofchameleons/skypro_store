@@ -2,6 +2,7 @@ from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.views.generic import TemplateView, ListView, UpdateView, DetailView, DeleteView, CreateView
 
+from catalog.forms import ProductForm
 from catalog.models import Product, Contact
 
 APP_TITLE = 'SF Store'
@@ -24,7 +25,7 @@ class ProductDetailView(DetailView):
 
 class ProductCreateView(CreateView):
     model = Product
-    fields = ('name', 'description', 'image', 'price', 'category')
+    form_class = ProductForm
 
     def get_success_url(self):
         return reverse('catalog:details', kwargs={'pk': self.object.pk})
@@ -32,7 +33,7 @@ class ProductCreateView(CreateView):
 
 class ProductUpdateView(UpdateView):
     model = Product
-    fields = ('name', 'description', 'image', 'price', 'category')
+    form_class = ProductForm
 
     def form_valid(self, form):
         product = Product.objects.get(pk=self.object.pk)

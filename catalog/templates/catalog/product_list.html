@@ -19,7 +19,7 @@
                                 </button>
                                 <!--                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
                             </div>
-                            <small class="text-body-secondary">Цена: {{ product.price }} ед.</small>
+                            <small class="text-body-secondary">Цена: {{ product.price|floatformat:2 }} ед.</small>
 
                         </div>
                         <p class="text-body-secondary">К другим товарам категории: <a href="#">
