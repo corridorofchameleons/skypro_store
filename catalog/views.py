@@ -1,8 +1,9 @@
+from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
 from django.views.generic import TemplateView, ListView, UpdateView, DetailView, DeleteView, CreateView
 
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, VersionForm
 from catalog.models import Product, Contact, Version
 
 
@@ -53,13 +54,27 @@ class ProductUpdateView(UpdateView):
     form_class = ProductForm
 
     def form_valid(self, form):
-        product = Product.objects.get(pk=self.object.pk)
-        product.updated_at = timezone.now()
-        product.save()
-        return super().form_valid(form)
+        context = self.get_context_data()
+        formset = context.get('formset')
+        if form.is_valid() and formset.is_valid():
+            product = form.save()
+            formset.instance = product
+            formset.save()
+            return super().form_valid(form)
+        else:
+            return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
     def get_success_url(self):
         return reverse('catalog:details', kwargs={'pk': self.object.pk})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        VersionFormSet = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+        if self.request.method == 'POST':
+            context['formset'] = VersionFormSet(self.request.POST, instance=self.object)
+        else:
+            context['formset'] = VersionFormSet(instance=self.object)
+        return context
 
 
 class ProductDeleteView(DeleteView):

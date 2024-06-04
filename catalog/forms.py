@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.forms import ModelForm, DecimalField, CharField, ModelChoiceField
 from django.forms.widgets import Select
 
-from catalog.models import Category, Product
+from catalog.models import Category, Product, Version
 
 
 class ProductForm(ModelForm):
@@ -28,3 +28,10 @@ class ProductForm(ModelForm):
         if price < 0:
             raise ValidationError('Отрицательная цена?')
         return price
+
+
+class VersionForm(ModelForm):
+    class Meta:
+        model = Version
+        fields = '__all__'
+        labels = {'version': 'Наименование'}

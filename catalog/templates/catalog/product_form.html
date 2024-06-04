@@ -1,22 +1,32 @@
 {% extends 'catalog/base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-8">
+        <div class="col-12">
             <form class="row" method="post" enctype="multipart/form-data">
-                <div class="card">
+                <div class="card col-6 p-3">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {{ form|crispy }}
+                    <div class="mt-5 mb-3">
+                        <button class="btn btn-primary" type="submit">Сохранить</button>
+                        {% if object %}
+                        <a class="btn btn-secondary"
+                           href="{% url 'catalog:details' product.pk %}">Вернуться</a></button>
+                        {% else %}
+                        <a class="btn btn-secondary" href="{% url 'catalog:home' %}">Вернуться</a>
+                        {% endif %}
+                    </div>
                 </div>
-                <button class="btn" type="submit"><a class="btn btn-primary">Сохранить</a></button>
-                {% if object %}
-                <button class="btn">
-                    <a class="btn btn-warning" href="{% url 'catalog:details' object.pk %}">Вернуться</a></button>
-                {% else %}
-                <button class="btn">
-                    <a class="btn btn-warning" href="{% url 'catalog:home' %}">Вернуться</a></button>
-                {% endif %}
+                <div class="card col-6 p-3">
+                    {{ formset.management_form }}
+                    {% for form in formset %}
+                    <div class="p-3">
+                        {{ form|crispy }}
+                    </div>
+                    {% endfor %}
+                </div>
             </form>
         </div>
     </div>
