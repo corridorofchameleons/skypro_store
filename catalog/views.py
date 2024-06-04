@@ -67,7 +67,6 @@ class ProductUpdateView(UpdateView):
 
                 # версии сохраняем как есть
                 formset.save()
-
                 versions = Version.objects.filter(product=product)
 
                 # счетчик текущих версий
