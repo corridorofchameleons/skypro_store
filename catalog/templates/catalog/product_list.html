@@ -19,9 +19,10 @@
                                 </button>
                                 <!--                  <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>-->
                             </div>
-                            <small class="text-body-secondary">Цена: {{ product.price|floatformat:2 }} ед.</small>
 
                         </div>
+                        <small class="text-body-secondary">Цена: {{ product.price|floatformat:2 }} ед.</small></br>
+                        <small class="text-body">Версия: {{ product.versions.all|curr_version }}</small>
                         <p class="text-body-secondary">К другим товарам категории: <a href="#">
                             {{ product.category }}
                         </a></p>

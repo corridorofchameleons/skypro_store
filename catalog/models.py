@@ -31,6 +31,21 @@ class Product(models.Model):
         return self.name
 
 
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE,
+                                related_name='versions', verbose_name='Продукт')
+    code = models.SmallIntegerField(verbose_name='Номер версии')
+    version = models.CharField(max_length=20, verbose_name='Версия')
+    current = models.BooleanField(verbose_name='Текущая версия')
+
+    class Meta:
+        verbose_name = 'Версия'
+        verbose_name_plural = 'Версии'
+
+    def __str__(self):
+        return f'{self.code} - {self.version}'
+
+
 class Contact(models.Model):
     address = models.CharField(max_length=200, verbose_name='Адрес')
     phone = models.CharField(max_length=20, verbose_name='Телефон')

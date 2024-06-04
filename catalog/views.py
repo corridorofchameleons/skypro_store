@@ -3,12 +3,13 @@ from django.utils import timezone
 from django.views.generic import TemplateView, ListView, UpdateView, DetailView, DeleteView, CreateView
 
 from catalog.forms import ProductForm
-from catalog.models import Product, Contact
+from catalog.models import Product, Contact, Version
 
-APP_TITLE = 'SF Store'
-context = {'app_title': APP_TITLE}
 
-paginate_by = 3
+# APP_TITLE = 'SF Store'
+# context = {'app_title': APP_TITLE}
+
+# paginate_by = 3
 
 
 class IndexView(TemplateView):
@@ -18,9 +19,25 @@ class IndexView(TemplateView):
 class ProductListView(ListView):
     model = Product
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['version_set'] = Version.objects.all()
+        return context
+
 
 class ProductDetailView(DetailView):
     model = Product
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = context.get('product')
+        for v in product.versions.all():
+            if v.current:
+                context['version'] = v
+                break
+        if not context.get('version'):
+            context['version'] = 'у продукта нет активной версии'
+        return context
 
 
 class ProductCreateView(CreateView):

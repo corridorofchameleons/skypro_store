@@ -12,7 +12,15 @@ def url_filter(path):
 
 @register.filter()
 def url_filter2(path):
-    print(path)
     if path:
         return f'/media/{path}'
     return '#'
+
+
+@register.filter()
+def curr_version(ver_list):
+    for v in ver_list:
+        if v.current:
+            return v
+    return 'у продукта нет активной версии'
+
