@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from django.utils import timezone
@@ -56,13 +57,36 @@ class ProductUpdateView(UpdateView):
     def form_valid(self, form):
         context = self.get_context_data()
         formset = context.get('formset')
-        if form.is_valid() and formset.is_valid():
-            product = form.save()
-            formset.instance = product
-            formset.save()
-            return super().form_valid(form)
-        else:
-            return self.render_to_response(self.get_context_data(form=form, formset=formset))
+        if form.is_valid():
+
+            # продукт до проверки не сохраняем
+            product = form.save(commit=False)
+
+            if formset.is_valid():
+                formset.instance = product
+
+                # версии сохраняем как есть
+                formset.save()
+
+                versions = Version.objects.filter(product=product)
+
+                # счетчик текущих версий
+                curr_cnt = 0
+
+                for v in versions:
+                    if v.current:
+                        curr_cnt += 1
+
+                # если больше одной текущей версии - привет, исключение!
+                if curr_cnt > 1:
+                    form.add_error(None, 'Только одна текущая категория допустима')
+                    return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+                # если все ок, сохраняем форму продукта
+                else:
+                    form.save()
+                return super().form_valid(form)
+        return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
     def get_success_url(self):
         return reverse('catalog:details', kwargs={'pk': self.object.pk})
