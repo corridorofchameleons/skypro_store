@@ -2,13 +2,14 @@ import os
 import secrets
 
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.views import PasswordChangeView
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, TemplateView, FormView
+from django.views.generic import CreateView, TemplateView, FormView, UpdateView
 
 from users.utils.password_generator import password_generator
-from users.forms import UserRegisterForm, PasswordResetForm
+from users.forms import UserRegisterForm, PasswordResetForm, UserUpdateForm
 from users.models import User
 from dotenv import load_dotenv
 
@@ -79,3 +80,22 @@ class PasswordReset(FormView):
 
 class PasswordChanged(TemplateView):
     template_name = 'registration/password_changed.html'
+
+
+class DataChanged(TemplateView):
+    template_name = 'registration/data_changed.html'
+
+
+class UserUpdate(UpdateView):
+    model = User
+    template_name = 'registration/update_user.html'
+    form_class = UserUpdateForm
+    success_url = reverse_lazy('users:data_changed')
+
+    def get_object(self, queryset=None):
+        return User.objects.get(pk=self.request.user.pk)
+
+
+class UserPasswordChangeView(PasswordChangeView):
+    template_name = 'registration/password_change.html'
+    success_url = reverse_lazy('users:data_changed')

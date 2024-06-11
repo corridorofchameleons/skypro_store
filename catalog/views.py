@@ -1,18 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
-from django.utils import timezone
 from django.views.generic import TemplateView, ListView, UpdateView, DetailView, DeleteView, CreateView
 
 from catalog.forms import ProductForm, VersionForm
-from catalog.models import Product, Contact, Version
-
-
-# APP_TITLE = 'SF Store'
-# context = {'app_title': APP_TITLE}
-
-# paginate_by = 3
+from catalog.models import Product, Version
 
 
 class IndexView(TemplateView):
@@ -30,6 +22,13 @@ class ProductListView(ListView):
 
 class ProductDetailView(DetailView):
     model = Product
+    pk_url_kwarg = 'pk'
+
+    def get_object(self, queryset=None):
+        print(self.request.GET.get('pk'))
+        product = Product.objects.select_related('user').get(pk=self.kwargs.get('pk'))
+        print(product)
+        return product
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -46,6 +45,13 @@ class ProductDetailView(DetailView):
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
+
+    def form_valid(self, form):
+        user = self.request.user
+        product = form.save()
+        product.user = user
+        product.save()
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse('catalog:details', kwargs={'pk': self.object.pk})
@@ -68,14 +74,9 @@ class ProductUpdateView(UpdateView):
 
                 # версии сохраняем как есть
                 formset.save()
-                versions = Version.objects.filter(product=product)
 
                 # счетчик текущих версий
-                curr_cnt = 0
-
-                for v in versions:
-                    if v.current:
-                        curr_cnt += 1
+                curr_cnt = Version.objects.filter(product=product, current=True).count()
 
                 # если больше одной текущей версии - привет, исключение!
                 if curr_cnt > 1:
@@ -108,39 +109,3 @@ class ProductDeleteView(DeleteView):
 
 class ContactsView(TemplateView):
     template_name = 'catalog/contacts.html'
-
-
-# def index(request):
-#     return render(request, 'catalog/article_list.html')
-
-
-# def product_list(request, page=1):
-#
-#     products = Product.objects.all()
-#     pages = len(products) // paginate_by + 1
-#
-#     return render(request, 'catalog/product_list.html',
-#                   context=context | {'products': products[paginate_by * (page - 1): paginate_by * page],
-#                                      'pages': range(1, pages)})
-
-
-# def product_details(request, pk):
-#     product = Product.objects.filter(pk=pk).first()
-#
-#     print(product.image)
-#     return render(request, 'catalog/product_detail.html',
-#                   context=context | {'product': product})
-
-
-# def contacts(request):
-#     if request.method == 'POST':
-#         name = request.POST.get('name')
-#         phone = request.POST.get('phone')
-#         message = request.POST.get('message')
-#         print(f'{name} ({phone}): {message}')
-#         return redirect('catalog:home')
-#
-#     else:
-#         contacts = Contact.objects.all().values()[0]
-#         return render(request, 'catalog/contacts.html',
-#                       context=context | contacts)

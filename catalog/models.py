@@ -22,6 +22,7 @@ class Product(models.Model):
     price = models.FloatField(verbose_name='Цена')
     created_at = models.DateTimeField(verbose_name='Дата создания', default=timezone.now)
     updated_at = models.DateTimeField(verbose_name='Дата изменения', auto_now=True)
+    user = models.ForeignKey('users.User', verbose_name='Владелец', on_delete=models.SET_NULL, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Продукт'

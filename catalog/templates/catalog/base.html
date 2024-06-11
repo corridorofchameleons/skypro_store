@@ -203,6 +203,7 @@
                     <ul class="list-unstyled">
                         {% if user.is_authenticated %}
                         <li><p>Привет, {{ user.email }}!</p></li>
+                        <a href="{% url 'users:update_user' %}" class="btn btn-link text-white" type="submit">Изменить данные</a>
                         <form method="post" action="{% url 'users:logout' %}">
                             {% csrf_token %}
                             <button class="btn btn-link text-white" type="submit">Выйти</button>
