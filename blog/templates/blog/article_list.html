@@ -1,5 +1,7 @@
 {% extends 'catalog/base.html' %}
 {% load my_tags %}
+{% load thumbnail %}
+
 {% block content %}
 <a class="btn btn-primary" href="{% url 'blog:create' %}">Создать статью</a>
 <div class="album py-5 bg-body-tertiary">
