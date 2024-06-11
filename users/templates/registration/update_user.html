@@ -9,7 +9,7 @@
                     {% csrf_token %}
                     {{ form|crispy }}
                     <p><button class="btn btn-primary btn-sm mt-3" type="submit">Сохранить</button></p>
-                    <a href="{% url 'users:password_change' %}" class="btn btn-secondary btn-sm mt-3" type="submit">Изменить пароль</a>
+                    <p><a href="{% url 'users:password_change' %}" class="btn btn-secondary btn-sm mt-3" type="submit">Изменить пароль</a></p>
                 </div>
             </form>
         </div>
