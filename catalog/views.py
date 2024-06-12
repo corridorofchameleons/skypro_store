@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, ListView, UpdateView, DetailView, DeleteView, CreateView
@@ -57,9 +57,12 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return reverse('catalog:details', kwargs={'pk': self.object.pk})
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(UserPassesTestMixin, UpdateView):
     model = Product
     form_class = ProductForm
+
+    def test_func(self):
+        return self.request.user == self.get_object().user
 
     def form_valid(self, form):
         context = self.get_context_data()
