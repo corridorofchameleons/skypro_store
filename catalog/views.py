@@ -105,9 +105,12 @@ class ProductUpdateView(UserPassesTestMixin, UpdateView):
         return context
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(UserPassesTestMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:home')
+
+    def test_func(self):
+        return self.request.user == self.get_object().user
 
 
 class ContactsView(TemplateView):
