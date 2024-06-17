@@ -23,10 +23,16 @@ class Product(models.Model):
     created_at = models.DateTimeField(verbose_name='Дата создания', default=timezone.now)
     updated_at = models.DateTimeField(verbose_name='Дата изменения', auto_now=True)
     user = models.ForeignKey('users.User', verbose_name='Владелец', on_delete=models.SET_NULL, null=True, blank=True)
+    is_published = models.BooleanField(default=False, verbose_name='Опубликован')
 
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+
+        permissions = [
+            ('can_set_published',
+             'Can publish')
+        ]
 
     def __str__(self):
         return self.name

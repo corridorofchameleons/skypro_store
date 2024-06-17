@@ -17,14 +17,18 @@
                 <small class="text-body">Владелец: {{ user.email }}</small></br>
                 {% endif %}
                 <div class="btn-group mt-5">
+                    {% if can_edit_moderator or can_edit_author %}
                     <button type="button" class="btn"><a class="btn btn-warning" href="{% url 'catalog:update' product.pk %}" role="button">
                         Изменить
                     </a>
                     </button>
+                    {% endif %}
+                    {% if can_edit_author %}
                     <button type="button" class="btn"><a class="btn btn-danger" href="{% url 'catalog:delete' product.pk %}" role="button">
                         Удалить
                     </a>
                     </button>
+                    {% endif %}
                 </div>
                 </br>
                 <a href="{% url 'catalog:home' %}" class="btn">Назад</a>

@@ -18,7 +18,7 @@ class ProductForm(ModelForm):
     def clean_name(self):
         name = self.cleaned_data.get('name')
         for bad_word in ['казино', 'криптовалюта', 'крипта', 'биржа',
-                             'дешево', 'бесплатно', 'обман', 'полиция', 'радар']:
+                         'дешево', 'бесплатно', 'обман', 'полиция', 'радар']:
             if bad_word in name.lower():
                 raise ValidationError(f'{bad_word} - плохое слово')
         return name
@@ -28,6 +28,12 @@ class ProductForm(ModelForm):
         if price < 0:
             raise ValidationError('Отрицательная цена?')
         return price
+
+
+class ProductModeratorForm(ModelForm):
+    class Meta:
+        model = Product
+        fields = ['description', 'category', 'is_published']
 
 
 class VersionForm(ModelForm):

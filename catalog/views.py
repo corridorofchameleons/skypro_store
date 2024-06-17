@@ -1,9 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, ListView, UpdateView, DetailView, DeleteView, CreateView
 
-from catalog.forms import ProductForm, VersionForm
+from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
 from catalog.models import Product, Version
 
 
@@ -25,9 +26,7 @@ class ProductDetailView(DetailView):
     pk_url_kwarg = 'pk'
 
     def get_object(self, queryset=None):
-        print(self.request.GET.get('pk'))
         product = Product.objects.select_related('user').get(pk=self.kwargs.get('pk'))
-        print(product)
         return product
 
     def get_context_data(self, **kwargs):
@@ -39,6 +38,11 @@ class ProductDetailView(DetailView):
                 break
         if not context.get('version'):
             context['version'] = 'у продукта нет активной версии'
+
+        # для сокращенного написания
+        context['can_edit_moderator'] = self.request.user.groups.filter(name='moderator').exists()
+        context['can_edit_author'] = self.request.user == self.object.user
+
         return context
 
 
@@ -57,12 +61,9 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return reverse('catalog:details', kwargs={'pk': self.object.pk})
 
 
-class ProductUpdateView(UserPassesTestMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
-
-    def test_func(self):
-        return self.request.user == self.get_object().user
 
     def form_valid(self, form):
         context = self.get_context_data()
@@ -102,7 +103,16 @@ class ProductUpdateView(UserPassesTestMixin, UpdateView):
             context['formset'] = VersionFormSet(self.request.POST, instance=self.object)
         else:
             context['formset'] = VersionFormSet(instance=self.object)
+
         return context
+
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.user:
+            return ProductForm
+        if user.groups.filter(name='moderator').exists():
+            return ProductModeratorForm
+        raise PermissionDenied
 
 
 class ProductDeleteView(UserPassesTestMixin, DeleteView):
