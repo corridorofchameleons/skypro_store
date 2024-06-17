@@ -14,7 +14,7 @@
                 <div class="row justify-content-start">
                     <small class="text-body-secondary">Опубликовано: {{ article.created_at|date:'Y-m-d H:i' }}</small>
                     <small class="text-body-secondary">Просмотров: {{ article.views }}</small>
-
+                    {% if perms.blog.change_article %}
                     <div class="text-start mt-3">
                         <button type="button" class="btn"><a class="btn btn-warning"
                                                              href="{% url 'blog:update' article.slug %}" role="button">
@@ -22,6 +22,8 @@
                         </a>
                         </button>
                     </div>
+                    {% endif %}
+                    {% if perms.blog.delete_article %}
                     <div class="text-start mb-3">
                         <button type="button" class="btn"><a class="btn btn-danger"
                                                              href="{% url 'blog:delete' article.slug %}" role="button">
@@ -29,6 +31,7 @@
                         </a>
                         </button>
                     </div>
+                    {% endif %}
                     <a href="{% url 'blog:index' %}">Назад</a>
                 </div>
             </div>

@@ -1,0 +1,67 @@
+[
+  {
+    "model": "blog.article",
+    "pk": 2,
+    "fields": {
+      "title": "Morbid Angel",
+      "slug": "morbid-angel",
+      "content": "Morbid Angel is an American death metal band based in Tampa, Florida, formed in 1983 by guitarist, primary composer and sole remaining original member Trey Azagthoth, vocalist and bassist Dallas Ward, and drummer Mike Browning. Widely considered one of the most influential bands in the genre and important in the transition of death metal from its thrash metal roots, they were one of the first bands to incorporate guttural vocals, up-tempo blast beats, multiple tempo changes and a dark atmosphere. They have been described as one of \"the most influential and emulated bands in death metal\", alongside Obituary, Death, Cynic, Autopsy and Deicide, and have been cited as an influence by many later bands.[1] They were also the first death metal band to experience mainstream success in connection with being signed to Giant Records in 1992, heavy rotation of their music videos on MTV, and having the music video for the song \"God of Emptiness\" shown on an episode of Beavis and Butt-Head.[2][3] Their first three albums – Altars of Madness (1989), Blessed Are the Sick (1991), and Covenant (1993) – are considered classics in the death metal genre.[4]\r\n\r\nBritish music magazine Terrorizer ranked Altars of Madness first in its list \"Top 40 greatest death metal albums\". Decibel magazine also rated guitarist Trey Azagthoth as the number one \"death metal guitarist ever\".[5] The band's songs are complex in arrangement, owing to the considerable technical skills of both Azagthoth as well as drummer Pete Sandoval, the latter of whom also played in the grindcore band Terrorizer. According to Nielsen SoundScan, Morbid Angel is the third best-selling death metal band in the United States (after Cannibal Corpse and Deicide up until 2003 with sales of over 445,000),[6] with their third album Covenant being the best-selling death metal album of the Soundscan era with over 150,000 units sold.[7]\r\n\r\nThe band's original lyrical themes, when helmed by Vincent (and Azagthoth and Browning respectively) focused mostly on Satanism, occultism and blasphemous subject matter, but from Formulas Fatal to the Flesh onward, via Azagthoth's influence, the lyrics moved toward the ancient Sumerian gods. Much of this is a nod to the Simon Necronomicon, which was influenced by Sumerian mythology, the author H. P. Lovecraft,[8] and fascination with the Roman Empire, and during Steve Tucker's tenure they take on more anti-religious and barbaric themes, namely of the strong overcoming the weak.",
+      "image": "blog/MA.jpg",
+      "created_at": "2024-05-21T19:28:00Z",
+      "is_published": true,
+      "views": 6
+    }
+  },
+  {
+    "model": "blog.article",
+    "pk": 3,
+    "fields": {
+      "title": "Cannibal Corpse",
+      "slug": "cannibal-corpse",
+      "content": "Cannibal Corpse is an American death metal band formed in Buffalo, New York, in 1988, now based out of Tampa, Florida. The band has released sixteen studio albums, two box sets, four video albums, and two live albums. The band has had little radio or television exposure throughout its existence, although a cult following began to build with the releases of their early albums, including Butchered at Birth (1991) and Tomb of the Mutilated (1992). As of 2015, they achieved worldwide sales of two million units for combined sales of all their albums.[4][5] In April 2021, Cannibal Corpse received their best \"first week\" sales of all-time and first Top 10 on the Billboard Top Album Sales Chart as Violence Unimagined entered at No. 6 with 14,000 copies sold.[6]\r\n\r\nBassist Alex Webster came up with the name Cannibal Corpse. They have had several lineup changes since their inception, with Webster and drummer Paul Mazurkiewicz as the only constant members. The members of Cannibal Corpse were originally inspired by thrash metal bands like Metallica, Slayer, Dark Angel, S.O.D., Sadus, Sodom, Kreator, D.R.I. and Sacrifice, and death metal bands such as Possessed, Autopsy, Morbid Angel and Death.[7][8][9] The band's album art (most often by Vincent Locke) and lyrics, drawing heavily on horror fiction and horror films, are highly controversial. At different times, several countries, such as Germany and Russia, have banned Cannibal Corpse from performing within their borders, or have banned the sale and display of original Cannibal Corpse album covers.[10][11]",
+      "image": "blog/cannibal-corpse-songtexte-lyrics-a75e96.jpg",
+      "created_at": "2024-05-21T19:26:04Z",
+      "is_published": true,
+      "views": 15
+    }
+  },
+  {
+    "model": "blog.article",
+    "pk": 4,
+    "fields": {
+      "title": "Death",
+      "slug": "death",
+      "content": "Death was an American death metal band formed in Altamonte Springs, Florida, in 1983 by guitarist Chuck Schuldiner (who later became the band's sole vocalist), drummer/vocalist Kam Lee and guitarist Rick Rozz. Death is considered to be among the most influential bands in heavy metal music and a pioneering force in death metal. The band's 1987 debut album, Scream Bloody Gore, has been widely regarded as one of the first death metal records, alongside the first records from Possessed and Necrophagia.\r\n\r\nDeath had a revolving lineup, with Schuldiner, aside from a European tour, being the sole consistent member.[1] The group's style also progressed, from the raw sound on its first two albums to a more complex one in its later stage.[2] The band disbanded after Schuldiner died of glioma and pneumonia in December 2001, but remains an enduring influence on heavy metal.",
+      "image": "blog/death-metal-russell-p-martinez.jpg",
+      "created_at": "2024-05-21T19:26:04Z",
+      "is_published": true,
+      "views": 22
+    }
+  },
+  {
+    "model": "blog.article",
+    "pk": 12,
+    "fields": {
+      "title": "ga ka ea",
+      "slug": "ga-ka-ea",
+      "content": "asdfg",
+      "image": "",
+      "created_at": "2024-05-21T20:04:36.759Z",
+      "is_published": false,
+      "views": 4
+    }
+  },
+  {
+    "model": "blog.article",
+    "pk": 14,
+    "fields": {
+      "title": "asdf",
+      "slug": "asdf",
+      "content": "asdf",
+      "image": "",
+      "created_at": "2024-06-04T08:48:15Z",
+      "is_published": false,
+      "views": 0
+    }
+  }
+]
