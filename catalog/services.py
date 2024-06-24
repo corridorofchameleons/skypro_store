@@ -11,5 +11,7 @@ def get_category_list():
     if not categories:
         categories = Category.objects.all()
         cache.set(key, categories)
+        print('not in cache')
         return categories
+    print('in cache')
     return categories

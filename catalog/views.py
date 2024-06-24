@@ -11,7 +11,7 @@ from catalog.services import get_category_list
 
 class IndexView(TemplateView):
     template_name = 'catalog/index.html'
-    extra_context = {'category_list': get_category_list()}
+    extra_context = {'category_list': get_category_list}
 
 
 class ProductListView(ListView):
@@ -26,7 +26,7 @@ class ProductListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['version_set'] = Version.objects.all()
-        context['category_list'] = get_category_list()
+        context['category_list'] = get_category_list
         return context
 
 
@@ -52,7 +52,7 @@ class ProductDetailView(DetailView):
         context['can_edit_moderator'] = self.request.user.groups.filter(name='moderator').exists()
         context['can_edit_author'] = self.request.user == self.object.user
 
-        context['category_list'] = get_category_list()
+        context['category_list'] = get_category_list
 
         return context
 
@@ -60,7 +60,7 @@ class ProductDetailView(DetailView):
 class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
-    extra_context = {'category_list': get_category_list()}
+    extra_context = {'category_list': get_category_list}
 
     def form_valid(self, form):
         user = self.request.user
@@ -116,7 +116,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         else:
             context['formset'] = VersionFormSet(instance=self.object)
 
-        context['category_list'] = get_category_list()
+        context['category_list'] = get_category_list
         return context
 
     def get_form_class(self):
@@ -131,7 +131,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 class ProductDeleteView(UserPassesTestMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:home')
-    extra_context = {'category_list': get_category_list()}
+    extra_context = {'category_list': get_category_list}
 
     def test_func(self):
         return self.request.user == self.get_object().user
@@ -139,4 +139,4 @@ class ProductDeleteView(UserPassesTestMixin, DeleteView):
 
 class ContactsView(TemplateView):
     template_name = 'catalog/contacts.html'
-    extra_context = {'category_list': get_category_list()}
+    extra_context = {'category_list': get_category_list}
